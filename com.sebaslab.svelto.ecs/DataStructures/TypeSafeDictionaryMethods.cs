@@ -244,7 +244,7 @@ namespace Svelto.ECS.Internal
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ExecuteEnginesSwapCallbacks<Strategy1, Strategy2, Strategy3, TValue>
         (FasterList<(uint, uint, string)> infostoprocess
-       , ref SveltoDictionary<uint, TValue, Strategy1, Strategy2, Strategy3> fromDictionary
+       , ref SveltoDictionary<uint, TValue, Strategy1, Strategy2, Strategy3> toDictionary
        , FasterList<ReactEngineContainer<IReactOnSwap>> reactiveenginesswap, ExclusiveGroupStruct togroup
        , ExclusiveGroupStruct fromgroup, in PlatformProfiler sampler)
             where Strategy1 : struct, IBufferStrategy<SveltoDictionaryNode<uint>>
@@ -263,7 +263,8 @@ namespace Svelto.ECS.Internal
 
                 try
                 {
-                    ref var entityComponent = ref fromDictionary.GetValueByRef(fromEntityID);
+                    // This is a callback to the swap that already happened, so this is actually the destinationDictionary so use target ID.
+                    ref var entityComponent = ref toDictionary.GetValueByRef(toEntityID);
                     var     newEgid         = new EGID(toEntityID, togroup);
                     for (var j = 0; j < reactiveenginesswap.count; j++)
                         using (sampler.Sample(reactiveenginesswap[j].name))
