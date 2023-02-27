@@ -44,7 +44,7 @@ namespace Svelto.ECS
             <JOB>(this JOB job, int iterations, JobHandle inputDeps, JobHandle combinedDeps) where JOB: struct, IJobParallelFor
         {
             if (iterations == 0)
-                return inputDeps;
+                return JobHandle.CombineDependencies(inputDeps,combinedDeps);
 
             var innerloopBatchCount = ProcessorCount.BatchSize((uint)iterations);
             var jobDeps = job.Schedule(iterations, innerloopBatchCount, inputDeps);
