@@ -185,10 +185,15 @@ namespace Svelto.ECS
         readonly EntitiesDB _entitiesDB;
 
         EntitiesDB IUnitTestingInterface.entitiesForTesting => _entitiesDB;
+
+        FasterDictionary<ExclusiveGroupStruct, FasterDictionary<RefWrapperType, ITypeSafeDictionary>>
+            IUnitTestingInterface.groupEntityComponentsDB => _groupEntityComponentsDB;
     }
 
     public interface IUnitTestingInterface
     {
         EntitiesDB entitiesForTesting { get; }
+
+        FasterDictionary<ExclusiveGroupStruct, FasterDictionary<RefWrapperType, ITypeSafeDictionary>> groupEntityComponentsDB { get; }
     }
 }
