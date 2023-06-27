@@ -11,5 +11,7 @@ namespace Svelto.ECS.Serialization
         }
         
         internal readonly string _name;
+
+        public string Name => _name;
     }
 }
